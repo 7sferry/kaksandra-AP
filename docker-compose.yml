@@ -7,16 +7,16 @@ services:
     environment:
       CASSANDRA_CLUSTER_NAME: test-cluster
       CASSANDRA_SEEDS: cass1
-      CASSANDRA_DC: dc1
+      CASSANDRA_DC: datacenter1
       CASSANDRA_RACK: r1
       CASSANDRA_LISTEN_ADDRESS: cass1
       CASSANDRA_BROADCAST_ADDRESS: cass1
       CASSANDRA_RPC_ADDRESS: 0.0.0.0
       CASSANDRA_BROADCAST_RPC_ADDRESS: cass1
-    ports:
-      - "9042:9042"
     networks:
       - cassnet
+    ports:
+      - "9042:9042"
     volumes:
       - cass1:/var/lib/cassandra
 
@@ -28,16 +28,16 @@ services:
     environment:
       CASSANDRA_CLUSTER_NAME: test-cluster
       CASSANDRA_SEEDS: cass1
-      CASSANDRA_DC: dc1
+      CASSANDRA_DC: datacenter1
       CASSANDRA_RACK: r1
       CASSANDRA_LISTEN_ADDRESS: cass2
       CASSANDRA_BROADCAST_ADDRESS: cass2
       CASSANDRA_RPC_ADDRESS: 0.0.0.0
       CASSANDRA_BROADCAST_RPC_ADDRESS: cass2
-    ports:
-      - "9142:9042"
     networks:
       - cassnet
+    ports:
+      - "9142:9042"
     volumes:
       - cass2:/var/lib/cassandra
 
@@ -49,18 +49,32 @@ services:
     environment:
       CASSANDRA_CLUSTER_NAME: test-cluster
       CASSANDRA_SEEDS: cass1
-      CASSANDRA_DC: dc1
+      CASSANDRA_DC: datacenter1
       CASSANDRA_RACK: r1
       CASSANDRA_LISTEN_ADDRESS: cass3
       CASSANDRA_BROADCAST_ADDRESS: cass3
       CASSANDRA_RPC_ADDRESS: 0.0.0.0
       CASSANDRA_BROADCAST_RPC_ADDRESS: cass3
-    ports:
-      - "9242:9042"
     networks:
       - cassnet
+    ports:
+      - "9242:9042"
     volumes:
       - cass3:/var/lib/cassandra
+
+  spring-ap:
+    build: .          # directory of your Spring Boot ap
+    container_name: spring-ap
+#    depends_on:
+#      - cassandra1
+#      - cassandra2
+#      - cassandra3
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - cassnet
+    ports:
+      - "9080:9080"
 
 networks:
   cassnet:

@@ -1,15 +1,15 @@
 spring:
   cassandra:
     contact-points:
-      - localhost:9042
-      - localhost:9142
-      - localhost:9242
+      - cass1:9042
+      - cass2:9042
+      - cass3:9042
+    local-datacenter: datacenter1
     keyspace-name: demo_keyspace
     schema-action: create_if_not_exists
     request:
-      consistency: one
       timeout: 10s
-    local-datacenter: datacenter1
+      consistency: one
 
 server:
   port: 9080

@@ -8,6 +8,7 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 @EnableCassandraRepositories
 public class DemoApplication {
     static void main(String[] args) {
+	    System.out.println("Hello World!");
         SpringApplication.run(DemoApplication.class, args);
     }
 }
